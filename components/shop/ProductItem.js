@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableNativeFeedback,
 } from "react-native";
-import Colors from "../../constants/Color";
 
 const ProductItem = (props) => {
   return (
@@ -17,7 +16,7 @@ const ProductItem = (props) => {
         </View>
         <View style={styles.details}>
           <Text style={styles.title}>{props.title}</Text>
-          <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+          <Text style={styles.price}>₹{props.price.toFixed(2)}</Text>
         </View>
         <View style={styles.action}>{props.children}</View>
       </View>

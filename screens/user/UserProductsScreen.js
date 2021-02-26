@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, Button } from "react-native";
+import { Alert, FlatList, Button, View, Text } from "react-native";
 import ProductItem from "../../components/shop/ProductItem";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -7,9 +7,35 @@ import HeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Color";
 import * as productsActions from "../../store/actions/products";
 
-const UserProductsScreen = () => {
+const UserProductsScreen = (props) => {
   const userProduct = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
+
+  const editProductHandler = (id) => {
+    props.navigation.navigate("EditProduct", { productId: id });
+  };
+
+  const deleteHandler = (id) => {
+    Alert.alert("are you sure?", "Do you really want to delete this item?", [
+      { text: "No", style: "default" },
+      {
+        text: "yes",
+        style: "destructive",
+        onPress: () => {
+          dispatch(productsActions.deleteProduct(id));
+        },
+      },
+    ]);
+  };
+
+  if (userProduct.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>No products Found</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={userProduct}
@@ -18,14 +44,20 @@ const UserProductsScreen = () => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onSelect={() => {}}
+          onSelect={() => {
+            editProductHandler(itemData.item.id);
+          }}
         >
-          <Button color={Colors.primary} title='Edit' onPress={() => {}} />
+          <Button
+            color={Colors.primary}
+            title='Edit'
+            onPress={() => {
+              editProductHandler(itemData.item.id);
+            }}
+          />
           <Button
             title='Delete'
-            onPress={() => {
-              dispatch(productsActions.deleteProduct(itemData.item.id));
-            }}
+            onPress={deleteHandler.bind(this, itemData.item.id)}
           />
         </ProductItem>
       )}
@@ -43,6 +75,17 @@ UserProductsScreen.navigationOptions = (navData) => {
           iconName='md-menu'
           onPress={() => {
             navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='Cart'
+          iconName='md-create'
+          onPress={() => {
+            navData.navigation.navigate("EditProduct");
           }}
         />
       </HeaderButtons>
