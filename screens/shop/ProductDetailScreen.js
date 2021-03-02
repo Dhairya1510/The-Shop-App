@@ -12,7 +12,7 @@ import * as cartActions from "../../store/actions/cart";
 import Colors from "../../constants/Color";
 
 const ProductDetailScreen = (props) => {
-  const productId = props.navigation.getParam("productId");
+  const productId = props.route.params.productId;
   const selectedProduct = useSelector((state) =>
     state.products.availableProducts.find((prod) => prod.id === productId)
   );
@@ -30,15 +30,16 @@ const ProductDetailScreen = (props) => {
           }}
         />
       </View>
-      <Text style={styles.price}>${selectedProduct.price}</Text>
+      <Text style={styles.price}>₹{selectedProduct.price}</Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>
+      <Text style={styles.category}>Category : {selectedProduct.category}</Text>
     </ScrollView>
   );
 };
 
-ProductDetailScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
-    headerTitle: navData.navigation.getParam("productTitle"),
+    headerTitle: navData.route.params.productTitle,
   };
 };
 
@@ -63,6 +64,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginHorizontal: 20,
     fontFamily: "open-sans",
+  },
+  category: {
+    fontSize: 25,
+    textAlign: "center",
+    marginHorizontal: 15,
+    fontFamily: "open-sans-bold",
   },
 });
 

@@ -17,8 +17,8 @@ const ProductItem = (props) => {
         <View style={styles.details}>
           <Text style={styles.title}>{props.title}</Text>
           <Text style={styles.price}>₹{props.price.toFixed(2)}</Text>
+          <View style={styles.action}>{props.children}</View>
         </View>
-        <View style={styles.action}>{props.children}</View>
       </View>
     </TouchableNativeFeedback>
   );
@@ -26,8 +26,8 @@ const ProductItem = (props) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    width: "100%",
-    height: "60%",
+    width: "50%",
+    height: "100%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: "hidden",
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     height: 250,
     margin: 20,
     overflow: "hidden",
+    flexDirection: "row",
   },
   image: {
     width: "100%",
@@ -51,24 +52,26 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "open-sans-bold",
     fontSize: 18,
+    padding: 10,
     marginVertical: 4,
   },
   price: {
     fontSize: 14,
     color: "#888",
     fontFamily: "open-sans",
+    padding: 10,
   },
   action: {
-    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "25%",
+    height: "40%",
     paddingHorizontal: 20,
   },
   details: {
     alignItems: "center",
-    height: "15%",
+    height: "100%",
     padding: 10,
+    flexDirection: "column",
   },
 });
 

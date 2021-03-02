@@ -1,12 +1,21 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet, Button } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Button,
+  TextInput,
+} from "react-native";
 import Colors from "../../constants/Color";
 import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
 import * as cartActions from "../../store/actions/cart";
 import * as ordersAction from "../../store/actions/orders";
+import { log } from "react-native-reanimated";
 
 const CartScreen = (props) => {
+  const [enteredValue, setEnteredValue] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
@@ -23,22 +32,38 @@ const CartScreen = (props) => {
       a.productId > b.productId ? 1 : -1
     );
   });
+
+  const promohandler = (inputText) => {
+    setEnteredValue(inputText);
+  };
+  let sum;
+  if (enteredValue == "FIRST50") {
+    sum = Math.round(cartTotalAmount.toFixed(2) * 100) / 100 / 2;
+  } else {
+    sum = Math.round(cartTotalAmount.toFixed(2) * 100) / 100;
+  }
+
   const dispatch = useDispatch();
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
+        <Text style={styles.summaryText}>Have Promo-Code ? :</Text>
+        <TextInput
+          style={styles.input}
+          value={enteredValue}
+          onChangeText={promohandler}
+          placeholder={" TRY : FIRST50"}
+        />
         <Text style={styles.summaryText}>
-          Total:{" "}
-          <Text style={styles.amount}>
-            ₹{Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
-          </Text>
+          Total: <Text style={styles.amount}>₹{sum}</Text>
         </Text>
+
         <Button
           color={Colors.accent}
           title='Order Now'
           disabled={cartItems.length === 0}
           onPress={() => {
-            dispatch(ordersAction.addOrder(cartItems, cartTotalAmount));
+            dispatch(ordersAction.addOrder(cartItems, sum));
           }}
         />
       </View>
@@ -66,11 +91,11 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   summary: {
-    flexDirection: "row",
+    // flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
-    padding: 10,
+    padding: 20,
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
@@ -81,13 +106,23 @@ const styles = StyleSheet.create({
   },
   summaryText: {
     fontFamily: "open-sans-bold",
+    padding: 20,
   },
   amount: {
     color: Colors.primary,
+    padding: 20,
+  },
+  input: {
+    paddingHorizontal: 2,
+    paddingVertical: 5,
+    borderWidth: 2,
+    borderRadius: 10,
+    paddingHorizontal: 2,
+    paddingVertical: 5,
   },
 });
 
-CartScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: "Your Order",
 };
 
