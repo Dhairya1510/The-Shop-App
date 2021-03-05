@@ -5,7 +5,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { Platform, SafeAreaView, Button, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProductsOverviewScreen, {
@@ -32,7 +32,10 @@ import AuthScreen, {
 import StartupScreen from "../screens/StartupScreen";
 import SearchScreen, {
   screenOptions as searchScreenOptions,
-} from "../screens/user/SearchScreen";
+} from "../screens/shop/SearchScreen";
+import DealOftheDayScreen, {
+  screenOptions as DODScreenOptions,
+} from "../screens/shop/DealOftheDayScreen";
 import Colors from "../constants/Color";
 import * as authActions from "../store/actions/auth";
 
@@ -126,6 +129,20 @@ export const SearchNavigator = () => {
     </SearchStackNavigator.Navigator>
   );
 };
+
+const DODStackNavigator = createStackNavigator();
+
+export const DODNavigator = () => {
+  return (
+    <DODStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <DODStackNavigator.Screen
+        name='Search'
+        component={DealOftheDayScreen}
+        options={DODScreenOptions}
+      />
+    </DODStackNavigator.Navigator>
+  );
+};
 // const OrdersNavigator = createStackNavigator(
 //   {
 //     Orders: OrdersScreen
@@ -148,7 +165,10 @@ const AdminStackNavigator = createStackNavigator();
 
 export const AdminNavigator = () => {
   const admin = useSelector((state) => state.auth.userId);
-  if (admin == "z4t11Aiky2QK7OKTW8LywbCS9pi2") {
+  if (
+    admin == "z4t11Aiky2QK7OKTW8LywbCS9pi2" ||
+    admin == "BBoI9PjWHSbuwYKHmAlIlV71go03"
+  ) {
     return (
       <AdminStackNavigator.Navigator screenOptions={defaultNavOptions}>
         <AdminStackNavigator.Screen
@@ -192,7 +212,10 @@ const ShopDrawerNavigator = createDrawerNavigator();
 export const ShopNavigator = () => {
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.auth.userId);
-  if (admin == "z4t11Aiky2QK7OKTW8LywbCS9pi2") {
+  if (
+    admin == "z4t11Aiky2QK7OKTW8LywbCS9pi2" ||
+    admin == "BBoI9PjWHSbuwYKHmAlIlV71go03"
+  ) {
     return (
       <ShopDrawerNavigator.Navigator
         drawerContent={(props) => {
@@ -238,6 +261,19 @@ export const ShopNavigator = () => {
                 name={Platform.OS === "android" ? "md-search" : "ios-list"}
                 size={23}
                 color={props.color}
+              />
+            ),
+          }}
+        />
+        <ShopDrawerNavigator.Screen
+          name='Deal of The Day'
+          component={DODNavigator}
+          options={{
+            drawerIcon: (props) => (
+              <MaterialCommunityIcons
+                name='brightness-percent'
+                size={24}
+                color='black'
               />
             ),
           }}
@@ -316,6 +352,19 @@ export const ShopNavigator = () => {
                 name={Platform.OS === "android" ? "md-search" : "ios-list"}
                 size={23}
                 color={props.color}
+              />
+            ),
+          }}
+        />
+        <ShopDrawerNavigator.Screen
+          name='Deal of The Day'
+          component={DODNavigator}
+          options={{
+            drawerIcon: (props) => (
+              <MaterialCommunityIcons
+                name='brightness-percent'
+                size={24}
+                color='black'
               />
             ),
           }}

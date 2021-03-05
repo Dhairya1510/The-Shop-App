@@ -51,6 +51,12 @@ const ProductsOverviewScreen = (props) => {
       productTitle: title,
     });
   };
+
+  const quickBuyHandler = (item) => {
+    dispatch(cartActions.addToCart(item));
+    props.navigation.navigate("Cart");
+  };
+
   if (error) {
     <View style={styles.centered}>
       <Text>An Error occured!</Text>
@@ -87,19 +93,37 @@ const ProductsOverviewScreen = (props) => {
             selectItemHandler(itemData.item.id, itemData.item.title);
           }}
         >
-          <Button
-            color={Colors.primary}
-            title='View Details'
-            onPress={() => {
-              selectItemHandler(itemData.item.id, itemData.item.title);
+          <View
+            style={{
+              alignContent: "space-around",
+              padding: 2,
+              justifyContent: "space-evenly",
+              flex: 1,
             }}
-          />
-          <Button
-            title='To Cart'
-            onPress={() => {
-              dispatch(cartActions.addToCart(itemData.item));
-            }}
-          />
+          >
+            <Button
+              color={Colors.primary}
+              title='View Details'
+              style={{ margin: 5 }}
+              onPress={() => {
+                selectItemHandler(itemData.item.id, itemData.item.title);
+              }}
+            />
+            <Button
+              title='To Cart'
+              style={{ margin: 5 }}
+              onPress={() => {
+                dispatch(cartActions.addToCart(itemData.item));
+              }}
+            />
+            <Button
+              title='Quick Buy'
+              color='#088F8F'
+              onPress={() => {
+                quickBuyHandler(itemData.item);
+              }}
+            />
+          </View>
         </ProductItem>
       )}
     />

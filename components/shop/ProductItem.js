@@ -23,7 +23,17 @@ const ProductItem = (props) => {
         </View>
         <View style={styles.details}>
           <Text style={styles.title}>{truncate(props.title)}</Text>
-          <Text style={styles.price}>₹{props.price.toFixed(2)}</Text>
+          {props.price > 1500 ? (
+            <>
+              <Text style={styles.Disprice}>₹{props.price.toFixed(2)}</Text>
+              <Text style={styles.Newprice}>
+                ₹{(props.price.toFixed(2) * 75) / 100}
+              </Text>
+            </>
+          ) : (
+            <Text style={styles.price}>₹{props.price.toFixed(2)}</Text>
+          )}
+          {/* <Text style={styles.price}>₹{props.price.toFixed(2)}</Text> */}
           <View style={styles.action}>{props.children}</View>
         </View>
       </View>
@@ -59,25 +69,39 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "open-sans-bold",
     fontSize: 18,
-    padding: 10,
+    padding: 5,
     marginVertical: 4,
   },
   price: {
     fontSize: 14,
     color: "#888",
     fontFamily: "open-sans",
-    padding: 10,
+    padding: 5,
+  },
+  Newprice: {
+    fontSize: 14,
+    color: "black",
+    fontFamily: "open-sans",
+    padding: 5,
+    fontWeight: "bold",
+  },
+  Disprice: {
+    fontSize: 14,
+    color: "#888",
+    fontFamily: "open-sans",
+    padding: 5,
+    textDecorationLine: "line-through",
   },
   action: {
     justifyContent: "space-between",
     alignItems: "center",
-    height: "40%",
-    paddingHorizontal: 20,
+    height: "60%",
+    paddingHorizontal: 15,
   },
   details: {
     alignItems: "center",
     height: "100%",
-    padding: 10,
+    padding: 5,
     flexDirection: "column",
   },
 });

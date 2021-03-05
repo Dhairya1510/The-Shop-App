@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Button,
   TextInput,
+  ScrollView,
 } from "react-native";
 import Colors from "../../constants/Color";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +14,7 @@ import CartItem from "../../components/shop/CartItem";
 import * as cartActions from "../../store/actions/cart";
 import * as ordersAction from "../../store/actions/orders";
 import { log } from "react-native-reanimated";
+import Card from "../../components/UI/Card";
 
 const CartScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
@@ -77,24 +79,30 @@ const CartScreen = (props) => {
           disabled={cartItems.length === 0 || address.length === 0}
           onPress={() => {
             dispatch(ordersAction.addOrder(cartItems, sum, address));
+            props.navigation.navigate("ProductsOverview");
           }}
         />
       </View>
-      <FlatList
-        data={cartItems}
-        keyExtractor={(item) => item.productId}
-        renderItem={(itemData) => (
-          <CartItem
-            quantity={itemData.item.quantity}
-            title={itemData.item.productTitle}
-            amount={itemData.item.sum}
-            deletable
-            onRemove={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.productId));
-            }}
-          />
-        )}
-      />
+      <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+        Your Order Summary
+      </Text>
+      <Card style={{ flex: 1 }}>
+        <FlatList
+          data={cartItems}
+          keyExtractor={(item) => item.productId}
+          renderItem={(itemData) => (
+            <CartItem
+              quantity={itemData.item.quantity}
+              title={itemData.item.productTitle}
+              amount={itemData.item.sum}
+              deletable
+              onRemove={() => {
+                dispatch(cartActions.removeFromCart(itemData.item.productId));
+              }}
+            />
+          )}
+        />
+      </Card>
     </View>
   );
 };
@@ -102,6 +110,7 @@ const CartScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     margin: 20,
+    flex: 1,
   },
   summary: {
     // flexDirection: "row",
