@@ -16,6 +16,7 @@ import { log } from "react-native-reanimated";
 
 const CartScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
+  const [address, setAddress] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
@@ -54,6 +55,18 @@ const CartScreen = (props) => {
           onChangeText={promohandler}
           placeholder={" TRY : FIRST50"}
         />
+        <Text style={styles.summaryText}>Delivery Address : </Text>
+        <TextInput
+          style={styles.address}
+          value={address}
+          onChangeText={(text) => setAddress(text)}
+          placeholder={"Write your Address here!"}
+          multiline
+          numberOfLines={3}
+          required
+          minLength={5}
+        />
+
         <Text style={styles.summaryText}>
           Total: <Text style={styles.amount}>₹{sum}</Text>
         </Text>
@@ -61,9 +74,9 @@ const CartScreen = (props) => {
         <Button
           color={Colors.accent}
           title='Order Now'
-          disabled={cartItems.length === 0}
+          disabled={cartItems.length === 0 || address.length === 0}
           onPress={() => {
-            dispatch(ordersAction.addOrder(cartItems, sum));
+            dispatch(ordersAction.addOrder(cartItems, sum, address));
           }}
         />
       </View>
@@ -119,6 +132,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 2,
     paddingVertical: 5,
+  },
+  address: {
+    margin: 15,
+    height: 40,
+    borderColor: "#7a42f4",
+    borderBottomWidth: 1,
   },
 });
 

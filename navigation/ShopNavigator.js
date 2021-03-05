@@ -30,6 +30,9 @@ import AuthScreen, {
   screenOptions as authScreenOptions,
 } from "../screens/user/AuthScreen";
 import StartupScreen from "../screens/StartupScreen";
+import SearchScreen, {
+  screenOptions as searchScreenOptions,
+} from "../screens/user/SearchScreen";
 import Colors from "../constants/Color";
 import * as authActions from "../store/actions/auth";
 
@@ -56,6 +59,12 @@ export const ProductsNavigator = () => {
         component={ProductsOverviewScreen}
         options={productsOverviewScreenOptions}
       />
+      <ProductsStackNavigator.Screen
+        name='Search'
+        component={SearchScreen}
+        options={searchScreenOptions}
+      />
+
       <ProductsStackNavigator.Screen
         name='ProductDetail'
         component={ProductDetailScreen}
@@ -104,6 +113,19 @@ export const OrdersNavigator = () => {
   );
 };
 
+const SearchStackNavigator = createStackNavigator();
+
+export const SearchNavigator = () => {
+  return (
+    <SearchStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <SearchStackNavigator.Screen
+        name='Search'
+        component={SearchScreen}
+        options={searchScreenOptions}
+      />
+    </SearchStackNavigator.Navigator>
+  );
+};
 // const OrdersNavigator = createStackNavigator(
 //   {
 //     Orders: OrdersScreen
@@ -195,20 +217,6 @@ export const ShopNavigator = () => {
         }}
       >
         <ShopDrawerNavigator.Screen
-          name='Admin'
-          component={AdminNavigator}
-          options={{
-            drawerIcon: (props) => (
-              <Ionicons
-                name={Platform.OS === "android" ? "md-create" : "ios-create"}
-                size={23}
-                color={props.color}
-              />
-            ),
-          }}
-        />
-
-        <ShopDrawerNavigator.Screen
           name='Products'
           component={ProductsNavigator}
           options={{
@@ -222,12 +230,38 @@ export const ShopNavigator = () => {
           }}
         />
         <ShopDrawerNavigator.Screen
+          name='Search'
+          component={SearchNavigator}
+          options={{
+            drawerIcon: (props) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-search" : "ios-list"}
+                size={23}
+                color={props.color}
+              />
+            ),
+          }}
+        />
+        <ShopDrawerNavigator.Screen
           name='Orders'
           component={OrdersNavigator}
           options={{
             drawerIcon: (props) => (
               <Ionicons
                 name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                size={23}
+                color={props.color}
+              />
+            ),
+          }}
+        />
+        <ShopDrawerNavigator.Screen
+          name='Admin'
+          component={AdminNavigator}
+          options={{
+            drawerIcon: (props) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-create" : "ios-create"}
                 size={23}
                 color={props.color}
               />
@@ -267,6 +301,19 @@ export const ShopNavigator = () => {
             drawerIcon: (props) => (
               <Ionicons
                 name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+                size={23}
+                color={props.color}
+              />
+            ),
+          }}
+        />
+        <ShopDrawerNavigator.Screen
+          name='Search'
+          component={SearchNavigator}
+          options={{
+            drawerIcon: (props) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-search" : "ios-list"}
                 size={23}
                 color={props.color}
               />

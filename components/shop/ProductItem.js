@@ -8,6 +8,13 @@ import {
 } from "react-native";
 
 const ProductItem = (props) => {
+  const truncate = (input) => {
+    if (input.length > 10) {
+      return input.substring(0, 10) + "...";
+    }
+    return input;
+  };
+
   return (
     <TouchableNativeFeedback onPress={props.onSelect} useForeground>
       <View style={styles.product}>
@@ -15,7 +22,7 @@ const ProductItem = (props) => {
           <Image style={styles.image} source={{ uri: props.image }} />
         </View>
         <View style={styles.details}>
-          <Text style={styles.title}>{props.title}</Text>
+          <Text style={styles.title}>{truncate(props.title)}</Text>
           <Text style={styles.price}>₹{props.price.toFixed(2)}</Text>
           <View style={styles.action}>{props.children}</View>
         </View>

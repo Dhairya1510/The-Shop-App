@@ -197,18 +197,21 @@ const EditProductScreen = (props) => {
           minLength={2}
         />
         {/* -------------------------------------------DROP-DOWN--------------------------------- */}
-        <Picker
-          selectedValue={selectedCategory}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedCategory(itemValue)
-          }
-        >
-          <Picker.Item label='Engineering' value='Engineering' />
-          <Picker.Item label='Law' value='Law' />
-          <Picker.Item label='BCom' value='BCom' />
-          <Picker.Item label='Bca' value='Bca' />
-          <Picker.Item label='Mca' value='Mca' />
-        </Picker>
+        {editedProduct ? null : (
+          <Picker
+            selectedValue={selectedCategory}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedCategory(itemValue)
+            }
+          >
+            <Picker.Item label='Choose Category' value='' />
+            <Picker.Item label='Engineering' value='Engineering' />
+            <Picker.Item label='Law' value='Law' />
+            <Picker.Item label='BCom' value='BCom' />
+            <Picker.Item label='Bca' value='Bca' />
+            <Picker.Item label='Mca' value='Mca' />
+          </Picker>
+        )}
         {/* -------------------------------------------DROP-DOWN--------------------------------- */}
       </View>
     </ScrollView>

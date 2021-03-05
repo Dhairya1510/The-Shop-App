@@ -29,6 +29,7 @@ const OrderItem = (props) => {
               title={cartItem.productTitle}
             />
           ))}
+          <Text style={styles.address}>{props.address}</Text>
         </View>
       )}
     </View>
@@ -61,6 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "open-sans",
     color: "#888",
+  },
+  address: {
+    fontSize: 16,
+    alignItems: "center",
+    textAlign: "center",
+    fontFamily: "open-sans-bold",
   },
   detail: {
     width: "100%",
