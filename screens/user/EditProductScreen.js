@@ -210,6 +210,7 @@ const EditProductScreen = (props) => {
             <Picker.Item label='BCom' value='BCom' />
             <Picker.Item label='Bca' value='Bca' />
             <Picker.Item label='Mca' value='Mca' />
+            <Picker.Item label='BA' value='Ba' />
           </Picker>
         )}
         {/* -------------------------------------------DROP-DOWN--------------------------------- */}

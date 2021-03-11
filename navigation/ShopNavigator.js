@@ -36,6 +36,9 @@ import SearchScreen, {
 import DealOftheDayScreen, {
   screenOptions as DODScreenOptions,
 } from "../screens/shop/DealOftheDayScreen";
+import ThankYouScreen, {
+  screenOptions as ThankyouScreenOptions,
+} from "../screens/shop/ThankYouScreen";
 import Colors from "../constants/Color";
 import * as authActions from "../store/actions/auth";
 
@@ -77,6 +80,11 @@ export const ProductsNavigator = () => {
         name='Cart'
         component={CartScreen}
         options={cartScreenOptions}
+      />
+      <ProductsStackNavigator.Screen
+        name='ThankYou'
+        component={ThankYouScreen}
+        options={ThankyouScreenOptions}
       />
     </ProductsStackNavigator.Navigator>
   );
