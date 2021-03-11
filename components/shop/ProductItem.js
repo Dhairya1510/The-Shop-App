@@ -23,16 +23,12 @@ const ProductItem = (props) => {
         </View>
         <View style={styles.details}>
           <Text style={styles.title}>{truncate(props.title)}</Text>
-          {props.price > 1500 ? (
-            <>
-              <Text style={styles.Disprice}>₹{props.price.toFixed(2)}</Text>
-              <Text style={styles.Newprice}>
-                ₹{(props.price.toFixed(2) * 75) / 100}
-              </Text>
-            </>
-          ) : (
-            <Text style={styles.price}>₹{props.price.toFixed(2)}</Text>
-          )}
+
+          <Text style={styles.Disprice}>₹{props.price.toFixed(2)}</Text>
+          {props.spPrice ? (
+            <Text style={styles.Newprice}>₹{props.spPrice.toFixed(2)}</Text>
+          ) : null}
+
           {/* <Text style={styles.price}>₹{props.price.toFixed(2)}</Text> */}
           <View style={styles.action}>{props.children}</View>
         </View>

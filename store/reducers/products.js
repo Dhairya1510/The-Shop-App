@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
         action.productData.imageUrl,
         action.productData.description,
         action.productData.price,
+        action.productData.spPrice,
         action.productData.category
       );
 
@@ -46,6 +47,7 @@ export default (state = initialState, action) => {
         action.productData.imageUrl,
         action.productData.description,
         action.productData.price,
+        action.productData.spPrice,
         state.userProducts[productIndex].category
       );
       const updatedUserProduct = [...state.userProducts];

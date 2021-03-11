@@ -29,6 +29,7 @@ export const fetchProducts = () => {
             resData[key].imageUrl,
             resData[key].description,
             resData[key].price,
+            resData[key].spPrice,
             resData[key].category
           )
         );
@@ -63,6 +64,7 @@ export const createProduct = (
   description,
   imageUrl,
   price,
+  spPrice,
   category
 ) => {
   return async (dispatch, getState) => {
@@ -80,6 +82,7 @@ export const createProduct = (
           description,
           imageUrl,
           price,
+          spPrice,
           category,
           ownerId: userId,
         }),
@@ -96,6 +99,7 @@ export const createProduct = (
         description,
         imageUrl,
         price,
+        spPrice,
         category,
         ownerId: userId,
       },
@@ -103,7 +107,14 @@ export const createProduct = (
   };
 };
 
-export const updateProduct = (id, title, description, imageUrl, price) => {
+export const updateProduct = (
+  id,
+  title,
+  description,
+  imageUrl,
+  price,
+  spPrice
+) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     await fetch(
@@ -117,7 +128,8 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
           title,
           description,
           imageUrl,
-          price
+          price,
+          spPrice,
         }),
       }
     );
@@ -129,7 +141,8 @@ export const updateProduct = (id, title, description, imageUrl, price) => {
         title,
         description,
         imageUrl,
-        price
+        price,
+        spPrice,
       },
     });
   };
