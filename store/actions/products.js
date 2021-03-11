@@ -103,7 +103,7 @@ export const createProduct = (
   };
 };
 
-export const updateProduct = (id, title, description, imageUrl) => {
+export const updateProduct = (id, title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     await fetch(
@@ -117,6 +117,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
           title,
           description,
           imageUrl,
+          price
         }),
       }
     );
@@ -128,6 +129,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
         title,
         description,
         imageUrl,
+        price
       },
     });
   };

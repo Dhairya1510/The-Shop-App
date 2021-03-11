@@ -56,7 +56,7 @@ const EditProductScreen = (props) => {
       title: editedProduct ? editedProduct.title : "",
       imageUrl: editedProduct ? editedProduct.imageUrl : "",
       description: editedProduct ? editedProduct.description : "",
-      price: "",
+      price: editedProduct ? editedProduct.price : "",
       category: selectedCategory,
     },
     inputValidities: {
@@ -90,7 +90,8 @@ const EditProductScreen = (props) => {
             prodId,
             formState.inputValues.title,
             formState.inputValues.description,
-            formState.inputValues.imageUrl
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price
           )
         );
       } else {
@@ -168,18 +169,19 @@ const EditProductScreen = (props) => {
           initiallyValid={!!editedProduct}
           required
         />
-        {editedProduct ? null : (
-          <Input
-            id='price'
-            label='Price'
-            errorText='please enter a valid Price!'
-            onInputChange={inputChangeHandler}
-            keyboardType='decimal-pad'
-            returnKeyType='next'
-            required
-            min={0.1}
-          />
-        )}
+
+        <Input
+          id='price'
+          label='Price'
+          errorText='please enter a valid Price!'
+          onInputChange={inputChangeHandler}
+          // initialValue={editedProduct ? editedProduct.price : 0}
+          //initiallyValid={!!editedProduct}
+          keyboardType='decimal-pad'
+          returnKeyType='next'
+          required
+          min={0.1}
+        />
 
         <Input
           id='description'
