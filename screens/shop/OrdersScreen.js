@@ -30,16 +30,17 @@ const OrdersScreen = (props) => {
           amount={itemData.item.totalAmount}
           date={itemData.item.readableDate}
           items={itemData.item.items}
+          address={itemData.item.address}
         />
       )}
     />
   );
 };
 
-OrdersScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Your Order",
-    headerLeft: (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='Cart'

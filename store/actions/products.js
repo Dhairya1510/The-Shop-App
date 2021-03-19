@@ -28,7 +28,9 @@ export const fetchProducts = () => {
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
-            resData[key].price
+            resData[key].price,
+            resData[key].spPrice,
+            resData[key].category
           )
         );
       }
@@ -57,7 +59,14 @@ export const deleteProduct = (productId) => {
   };
 };
 
-export const createProduct = (title, description, imageUrl, price) => {
+export const createProduct = (
+  title,
+  description,
+  imageUrl,
+  price,
+  spPrice,
+  category
+) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
@@ -73,6 +82,8 @@ export const createProduct = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          spPrice,
+          category,
           ownerId: userId,
         }),
       }
@@ -88,13 +99,22 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        spPrice,
+        category,
         ownerId: userId,
       },
     });
   };
 };
 
-export const updateProduct = (id, title, description, imageUrl) => {
+export const updateProduct = (
+  id,
+  title,
+  description,
+  imageUrl,
+  price,
+  spPrice
+) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     await fetch(
@@ -108,6 +128,8 @@ export const updateProduct = (id, title, description, imageUrl) => {
           title,
           description,
           imageUrl,
+          price,
+          spPrice,
         }),
       }
     );
@@ -119,6 +141,8 @@ export const updateProduct = (id, title, description, imageUrl) => {
         title,
         description,
         imageUrl,
+        price,
+        spPrice,
       },
     });
   };

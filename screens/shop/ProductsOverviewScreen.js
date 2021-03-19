@@ -31,12 +31,9 @@ const ProductsOverviewScreen = (props) => {
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    const willFocussub = props.navigation.addListener(
-      "willFocus",
-      loadProducts
-    );
+    const unsubscribe = props.navigation.addListener("focus", loadProducts);
     return () => {
-      willFocussub.remove();
+      unsubscribe();
     };
   }, [loadProducts]);
 
@@ -54,6 +51,12 @@ const ProductsOverviewScreen = (props) => {
       productTitle: title,
     });
   };
+
+  const quickBuyHandler = (item) => {
+    dispatch(cartActions.addToCart(item));
+    props.navigation.navigate("Cart");
+  };
+
   if (error) {
     <View style={styles.centered}>
       <Text>An Error occured!</Text>
@@ -86,33 +89,52 @@ const ProductsOverviewScreen = (props) => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
+          spPrice={itemData.item.spPrice}
           onSelect={() => {
             selectItemHandler(itemData.item.id, itemData.item.title);
           }}
         >
-          <Button
-            color={Colors.primary}
-            title='View Details'
-            onPress={() => {
-              selectItemHandler(itemData.item.id, itemData.item.title);
+          <View
+            style={{
+              alignContent: "space-around",
+              padding: 2,
+              justifyContent: "space-evenly",
+              flex: 1,
             }}
-          />
-          <Button
-            title='To Cart'
-            onPress={() => {
-              dispatch(cartActions.addToCart(itemData.item));
-            }}
-          />
+          >
+            <Button
+              color={Colors.primary}
+              title='View Details'
+              style={{ margin: 5 }}
+              onPress={() => {
+                selectItemHandler(itemData.item.id, itemData.item.title);
+              }}
+            />
+            <Button
+              title='To Cart'
+              style={{ margin: 5 }}
+              onPress={() => {
+                dispatch(cartActions.addToCart(itemData.item));
+              }}
+            />
+            <Button
+              title='Quick Buy'
+              color='#088F8F'
+              onPress={() => {
+                quickBuyHandler(itemData.item);
+              }}
+            />
+          </View>
         </ProductItem>
       )}
     />
   );
 };
 
-ProductsOverviewScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "All Products",
-    headerLeft: (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='Cart'
@@ -123,7 +145,7 @@ ProductsOverviewScreen.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerRight: (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='Cart'

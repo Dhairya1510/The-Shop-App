@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Button,
   Alert,
+  ImageBackground,
 } from "react-native";
 import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
@@ -80,7 +81,7 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate("Shop");
+      // props.navigation.navigate("Shop");
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -104,7 +105,16 @@ const AuthScreen = (props) => {
       keyboardVerticalOffset={50}
       style={styles.screen}
     >
-      <LinearGradient colors={["#ffedff", "#ffe3ff"]} style={styles.gradient}>
+      <ImageBackground
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          resizeMode: "cover",
+        }}
+        source={require("../../assets/1012.jpg")}
+      >
+        {/* <LinearGradient colors={["#ffedff", "#ffe3ff"]} style={styles.gradient}> */}
         <Card style={styles.authContainer}>
           <ScrollView>
             <Input
@@ -150,15 +160,16 @@ const AuthScreen = (props) => {
             </View>
           </ScrollView>
         </Card>
-      </LinearGradient>
+        {/* </LinearGradient> */}
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
 
 export default AuthScreen;
 
-AuthScreen.navigationOptions = {
-  headerTitle: "Authenticate",
+export const screenOptions = {
+  headerTitle: "Welcome to BookWale!!",
 };
 
 const styles = StyleSheet.create({

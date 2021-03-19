@@ -37,38 +37,42 @@ const UserProductsScreen = (props) => {
   }
 
   return (
-    <FlatList
-      data={userProduct}
-      renderItem={(itemData) => (
-        <ProductItem
-          image={itemData.item.imageUrl}
-          title={itemData.item.title}
-          price={itemData.item.price}
-          onSelect={() => {
-            editProductHandler(itemData.item.id);
-          }}
-        >
-          <Button
-            color={Colors.primary}
-            title='Edit'
-            onPress={() => {
+    console.log(userProduct, "in ups"),
+    (
+      <FlatList
+        data={userProduct}
+        renderItem={(itemData) => (
+          <ProductItem
+            image={itemData.item.imageUrl}
+            title={itemData.item.title}
+            price={itemData.item.price}
+            spPrice={itemData.item.spPrice}
+            onSelect={() => {
               editProductHandler(itemData.item.id);
             }}
-          />
-          <Button
-            title='Delete'
-            onPress={deleteHandler.bind(this, itemData.item.id)}
-          />
-        </ProductItem>
-      )}
-    />
+          >
+            <Button
+              color={Colors.primary}
+              title='Edit'
+              onPress={() => {
+                editProductHandler(itemData.item.id);
+              }}
+            />
+            <Button
+              title='Delete'
+              onPress={deleteHandler.bind(this, itemData.item.id)}
+            />
+          </ProductItem>
+        )}
+      />
+    )
   );
 };
 
-UserProductsScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Your Product",
-    headerLeft: (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='Cart'
@@ -79,7 +83,7 @@ UserProductsScreen.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerRight: (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='Cart'
