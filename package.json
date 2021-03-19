@@ -40,5 +40,23 @@
   "devDependencies": {
     "@babel/core": "~7.9.0"
   },
-  "private": true
+  "private": true,
+  "name": "bookwale",
+  "version": "1.0.0",
+  "description": "bookwale apk made with react-native and expo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhairya1510/The-Shop-App.git"
+  },
+  "keywords": [
+    "e-commerce-native-app",
+    "react-native",
+    "expo"
+  ],
+  "author": "Dhairya",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Dhairya1510/The-Shop-App/issues"
+  },
+  "homepage": "https://github.com/Dhairya1510/The-Shop-App#readme"
 }
