@@ -6,13 +6,17 @@ import {
   Button,
   ActivityIndicator,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
 import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from "../../store/actions/cart";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Color";
 import ProductItem from "../../components/shop/ProductItem";
+import Card from "../../components/UI/Card";
 import * as productsActions from "../../store/actions/products";
 
 const ProductsOverviewScreen = (props) => {
@@ -52,10 +56,10 @@ const ProductsOverviewScreen = (props) => {
     });
   };
 
-  const quickBuyHandler = (item) => {
-    dispatch(cartActions.addToCart(item));
-    props.navigation.navigate("Cart");
-  };
+  // const quickBuyHandler = (item) => {
+  //   dispatch(cartActions.addToCart(item));
+  //   props.navigation.navigate("Cart");
+  // };
 
   if (error) {
     <View style={styles.centered}>
@@ -94,37 +98,24 @@ const ProductsOverviewScreen = (props) => {
             selectItemHandler(itemData.item.id, itemData.item.title);
           }}
         >
-          <View
-            style={{
-              alignContent: "space-around",
-              padding: 2,
-              justifyContent: "space-evenly",
-              flex: 1,
-            }}
-          >
-            <Button
-              color={Colors.primary}
-              title='View Details'
-              style={{ margin: 5 }}
-              onPress={() => {
-                selectItemHandler(itemData.item.id, itemData.item.title);
-              }}
-            />
-            <Button
-              title='To Cart'
-              style={{ margin: 5 }}
+          <Card style={{ width: 90, height: 25, margin: 5, padding: 5 }}>
+            <TouchableOpacity
               onPress={() => {
                 dispatch(cartActions.addToCart(itemData.item));
               }}
-            />
-            <Button
-              title='Quick Buy'
-              color='#088F8F'
-              onPress={() => {
-                quickBuyHandler(itemData.item);
-              }}
-            />
-          </View>
+            >
+              <View>
+                {/* <Button
+                title='To Cart'
+                style={{ margin: 5 }}
+                onPress={() => {
+                  dispatch(cartActions.addToCart(itemData.item));
+                }}
+              /> */}
+                <Text>Add To Cart</Text>
+              </View>
+            </TouchableOpacity>
+          </Card>
         </ProductItem>
       )}
     />
@@ -134,6 +125,17 @@ const ProductsOverviewScreen = (props) => {
 export const screenOptions = (navData) => {
   return {
     headerTitle: "All Products",
+    headerBackground: () => (
+      <LinearGradient
+        colors={["#6EADFF", "#8DFFC6"]}
+        style={{
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      ></LinearGradient>
+    ),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

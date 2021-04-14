@@ -8,6 +8,8 @@ import { Platform, SafeAreaView, Button, View } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 
+import { LinearGradient } from "expo-linear-gradient";
+
 import ProductsOverviewScreen, {
   screenOptions as productsOverviewScreenOptions,
 } from "../screens/shop/ProductsOverviewScreen";
@@ -228,23 +230,47 @@ export const ShopNavigator = () => {
       <ShopDrawerNavigator.Navigator
         drawerContent={(props) => {
           return (
-            <View style={{ flex: 1, paddingTop: 60 }}>
-              <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-                <DrawerItemList {...props} />
-                <Button
-                  title='Logout'
-                  color={Colors.primary}
-                  onPress={() => {
-                    dispatch(authActions.logout());
-                    // props.navigation.navigate('Auth');
-                  }}
-                />
-              </SafeAreaView>
-            </View>
+            <LinearGradient
+              colors={["#6EADFF", "#8DFFC6"]}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <View style={{ flex: 1, paddingTop: 60 }}>
+                <SafeAreaView
+                  forceInset={{ top: "always", horizontal: "never" }}
+                >
+                  <DrawerItemList {...props} />
+                  <View
+                    style={{
+                      height: 85,
+                      width: 280,
+                      alignItems: "center",
+                      padding: 5,
+                      // flex: 1,
+                      // borderWidth: 0,
+                      // borderRadius: 0,
+                      marginTop: 200,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Button
+                      title='Logout'
+                      color={"#6EADFF"}
+                      onPress={() => {
+                        dispatch(authActions.logout());
+                        // props.navigation.navigate('Auth');
+                      }}
+                    />
+                  </View>
+                </SafeAreaView>
+              </View>
+            </LinearGradient>
           );
         }}
         drawerContentOptions={{
-          activeTintColor: Colors.primary,
+          activeTintColor: "black",
         }}
       >
         <ShopDrawerNavigator.Screen
@@ -319,19 +345,29 @@ export const ShopNavigator = () => {
       <ShopDrawerNavigator.Navigator
         drawerContent={(props) => {
           return (
-            <View style={{ flex: 1, paddingTop: 60 }}>
-              <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-                <DrawerItemList {...props} />
-                <Button
-                  title='Logout'
-                  color={Colors.primary}
-                  onPress={() => {
-                    dispatch(authActions.logout());
-                    // props.navigation.navigate('Auth');
-                  }}
-                />
-              </SafeAreaView>
-            </View>
+            <LinearGradient
+              colors={["#6EADFF", "#8DFFC6"]}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <View style={{ flex: 1, paddingTop: 60 }}>
+                <SafeAreaView
+                  forceInset={{ top: "always", horizontal: "never" }}
+                >
+                  <DrawerItemList {...props} />
+                  <Button
+                    title='Logout'
+                    color={Colors.primary}
+                    onPress={() => {
+                      dispatch(authActions.logout());
+                      // props.navigation.navigate('Auth');
+                    }}
+                  />
+                </SafeAreaView>
+              </View>
+            </LinearGradient>
           );
         }}
         drawerContentOptions={{

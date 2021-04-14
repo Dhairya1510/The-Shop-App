@@ -8,6 +8,7 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Colors from "../../constants/Color";
 import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
@@ -21,10 +22,12 @@ const CartScreen = (props) => {
   const [address, setAddress] = useState("");
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
+    // console.log(state, " in cartsrc cartitem fuc");
     const transformedCartItems = [];
     for (const key in state.cart.items) {
       transformedCartItems.push({
         productId: key,
+        productImage: state.cart.items[key].image,
         productTitle: state.cart.items[key].productTitle,
         productPrice: state.cart.items[key].productPrice,
         quantity: state.cart.items[key].quantity,
@@ -35,6 +38,8 @@ const CartScreen = (props) => {
       a.productId > b.productId ? 1 : -1
     );
   });
+
+  // console.log(cartItems, "in carscr");
 
   const promohandler = (inputText) => {
     setEnteredValue(inputText);
@@ -48,91 +53,149 @@ const CartScreen = (props) => {
 
   const dispatch = useDispatch();
   return (
-    <View style={styles.screen}>
-      <View style={styles.summary}>
-        <Text style={styles.summaryText}>Have Promo-Code ? :</Text>
-        <TextInput
-          style={styles.input}
-          value={enteredValue}
-          onChangeText={promohandler}
-          placeholder={" TRY : FIRST50"}
-        />
-        <Text style={styles.summaryText}>Delivery Address : </Text>
-        <TextInput
-          style={styles.address}
-          value={address}
-          onChangeText={(text) => setAddress(text)}
-          placeholder={"Write your Address here!"}
-          multiline
-          numberOfLines={3}
-          required
-          minLength={5}
-        />
-
-        <Text style={styles.summaryText}>
-          Total: <Text style={styles.amount}>₹{sum}</Text>
-        </Text>
-
-        <Button
-          color={Colors.accent}
-          title='Order Now'
-          disabled={cartItems.length === 0 || address.length === 0}
-          onPress={() => {
-            dispatch(ordersAction.addOrder(cartItems, sum, address));
-            props.navigation.navigate("ThankYou");
+    <>
+      <Card
+        style={{
+          flex: 1,
+          margin: 10,
+          borderRadius: 10,
+        }}
+      >
+        <LinearGradient
+          colors={["#c9d6ff", "#e2e2e2"]}
+          style={{
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            // margin: 10,
           }}
-        />
-      </View>
-      <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-        Your Order Summary
-      </Text>
-      <Card style={{ flex: 1 }}>
-        <FlatList
-          data={cartItems}
-          keyExtractor={(item) => item.productId}
-          renderItem={(itemData) => (
-            <CartItem
-              quantity={itemData.item.quantity}
-              title={itemData.item.productTitle}
-              amount={itemData.item.sum}
-              deletable
-              onRemove={() => {
-                dispatch(cartActions.removeFromCart(itemData.item.productId));
+        >
+          <Text
+            style={{
+              fontWeight: "200",
+              fontSize: 20,
+              borderBottomColor: "black",
+              borderBottomWidth: 1,
+            }}
+          >
+            Your Order Summary
+          </Text>
+          <FlatList
+            data={cartItems}
+            keyExtractor={(item) => item.productId}
+            renderItem={(itemData) => (
+              <CartItem
+                image={itemData.item.productImage}
+                quantity={itemData.item.quantity}
+                title={itemData.item.productTitle}
+                amount={itemData.item.sum}
+                deletable
+                onRemove={() => {
+                  dispatch(cartActions.removeFromCart(itemData.item.productId));
+                }}
+              />
+            )}
+          />
+        </LinearGradient>
+      </Card>
+      <Card
+        style={{
+          flex: 0.5,
+          marginHorizontal: 10,
+          borderRadius: 10,
+        }}
+      >
+        <LinearGradient
+          colors={["#c9d6ff", "#e2e2e2"]}
+          style={{
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.summaryText}>Delivery Address : </Text>
+          <TextInput
+            style={styles.address}
+            value={address}
+            onChangeText={(text) => setAddress(text)}
+            placeholder={"Write your Address here!"}
+            multiline
+            numberOfLines={3}
+            required
+            minLength={5}
+          />
+        </LinearGradient>
+      </Card>
+
+      <View style={styles.screen}>
+        <View style={styles.summary}>
+          <LinearGradient
+            colors={["#c9d6ff", "#e2e2e2"]}
+            style={{
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.summaryText}>Have Promo-Code ? :</Text>
+            <TextInput
+              style={styles.input}
+              value={enteredValue}
+              onChangeText={promohandler}
+              placeholder={" TRY : FIRST50"}
+            />
+
+            <Text style={styles.summaryText}>
+              Total: <Text style={styles.amount}>₹{sum}</Text>
+            </Text>
+            <Button
+              color={Colors.accent}
+              title='Order Now'
+              disabled={cartItems.length === 0 || address.length === 0}
+              onPress={() => {
+                dispatch(ordersAction.addOrder(cartItems, sum, address));
+                props.navigation.navigate("ThankYou");
               }}
             />
-          )}
-        />
-      </Card>
-    </View>
+          </LinearGradient>
+        </View>
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    margin: 20,
+    // marginHorizontal: 1,
     flex: 1,
+    height: "30%",
+    width: "100%",
   },
   summary: {
+    margin: 10,
     // flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 20,
-    padding: 20,
+    // justifyContent: "space-between",
+    // marginBottom: 10,
+    // padding: 5,
     shadowColor: "black",
     shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
+    // shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     elevation: 5,
     borderRadius: 10,
-    backgroundColor: "white",
+    // backgroundColor: "white",
   },
   summaryText: {
     fontFamily: "open-sans-bold",
-    padding: 20,
+    padding: 10,
   },
   amount: {
     color: Colors.primary,
-    padding: 20,
+    padding: 10,
   },
   input: {
     paddingHorizontal: 2,
@@ -145,8 +208,8 @@ const styles = StyleSheet.create({
   address: {
     margin: 15,
     height: 40,
-    borderColor: "#7a42f4",
-    borderBottomWidth: 1,
+    // borderBottomColor: "black",
+    // borderBottomWidth: 1,
   },
 });
 
