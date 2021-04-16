@@ -7,7 +7,8 @@ class Product {
     description,
     price,
     spPrice,
-    category
+    category,
+    available
   ) {
     this.id = id;
     this.ownerId = ownerId;
@@ -17,6 +18,7 @@ class Product {
     this.price = price;
     this.spPrice = spPrice;
     this.category = category;
+    this.available = available;
   }
 }
 

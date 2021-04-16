@@ -28,7 +28,8 @@ export default (state = initialState, action) => {
         action.productData.description,
         action.productData.price,
         action.productData.spPrice,
-        action.productData.category
+        action.productData.category,
+        action.productData.available
       );
 
       return {
@@ -48,7 +49,8 @@ export default (state = initialState, action) => {
         action.productData.description,
         action.productData.price,
         action.productData.spPrice,
-        state.userProducts[productIndex].category
+        action.productData.category,
+        action.productData.available
       );
       const updatedUserProduct = [...state.userProducts];
       updatedUserProduct[productIndex] = updatedProduct;
@@ -57,6 +59,7 @@ export default (state = initialState, action) => {
       );
       const updatedAvailableProducts = [...state.availableProducts];
       updatedAvailableProducts[availableProductIndex] = updatedProduct;
+
       return {
         ...state,
         availableProducts: updatedAvailableProducts,

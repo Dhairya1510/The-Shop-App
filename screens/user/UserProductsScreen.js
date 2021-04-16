@@ -37,18 +37,22 @@ const UserProductsScreen = (props) => {
   }
 
   return (
-    console.log(userProduct, "in ups"),
-    (
-      <FlatList
-        data={userProduct}
-        renderItem={(itemData) => (
-          <ProductItem
-            image={itemData.item.imageUrl}
-            title={itemData.item.title}
-            price={itemData.item.price}
-            spPrice={itemData.item.spPrice}
-            onSelect={() => {
-              editProductHandler(itemData.item.id);
+    // console.log(userProduct, "in ups"),
+    <FlatList
+      data={userProduct}
+      renderItem={(itemData) => (
+        <ProductItem
+          image={itemData.item.imageUrl}
+          title={itemData.item.title}
+          price={itemData.item.price}
+          spPrice={itemData.item.spPrice}
+          onSelect={() => {
+            editProductHandler(itemData.item.id);
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
             }}
           >
             <Button
@@ -62,10 +66,13 @@ const UserProductsScreen = (props) => {
               title='Delete'
               onPress={deleteHandler.bind(this, itemData.item.id)}
             />
-          </ProductItem>
-        )}
-      />
-    )
+            <Text>
+              {itemData.item.available == "yes" ? "Available" : "UnAvailable"}
+            </Text>
+          </View>
+        </ProductItem>
+      )}
+    />
   );
 };
 

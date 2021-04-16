@@ -58,6 +58,7 @@ const EditProductScreen = (props) => {
       description: editedProduct ? editedProduct.description : "",
       price: editedProduct ? editedProduct.price : "",
       spPrice: editedProduct ? editedProduct.spPrice : "",
+      available: editedProduct ? editedProduct.available : "",
       category: selectedCategory,
     },
     inputValidities: {
@@ -66,6 +67,7 @@ const EditProductScreen = (props) => {
       description: editedProduct ? true : false,
       price: editedProduct ? true : false,
       spPrice: editedProduct ? true : false,
+      available: editedProduct ? true : false,
     },
     formIsValid: editedProduct ? true : false,
   });
@@ -94,7 +96,8 @@ const EditProductScreen = (props) => {
             formState.inputValues.description,
             formState.inputValues.imageUrl,
             +formState.inputValues.price,
-            +formState.inputValues.spPrice
+            +formState.inputValues.spPrice,
+            formState.inputValues.available
           )
         );
       } else {
@@ -105,6 +108,7 @@ const EditProductScreen = (props) => {
             formState.inputValues.imageUrl,
             +formState.inputValues.price,
             +formState.inputValues.spPrice,
+            formState.inputValues.available,
             selectedCategory
           )
         );
@@ -213,6 +217,19 @@ const EditProductScreen = (props) => {
           initiallyValid={!!editedProduct}
           required
           minLength={2}
+        />
+        <Input
+          id='available'
+          label='Available ?'
+          errorText='please enter a valid availability!'
+          keyboardType='default'
+          autoCapitalize='sentences'
+          returnKeyType='next'
+          autoCorrect
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.available : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
         {/* -------------------------------------------DROP-DOWN--------------------------------- */}
         {editedProduct ? null : (

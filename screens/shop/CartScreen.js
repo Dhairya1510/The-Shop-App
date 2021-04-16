@@ -20,6 +20,7 @@ import Card from "../../components/UI/Card";
 const CartScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [address, setAddress] = useState("");
+  const [show, setShow] = useState(true);
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     // console.log(state, " in cartsrc cartitem fuc");
@@ -54,103 +55,133 @@ const CartScreen = (props) => {
   const dispatch = useDispatch();
   return (
     <>
-      <Card
-        style={{
-          flex: 1,
-          margin: 10,
-          borderRadius: 10,
-        }}
-      >
-        <LinearGradient
-          colors={["#c9d6ff", "#e2e2e2"]}
-          style={{
-            width: "100%",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            // margin: 10,
-          }}
-        >
-          <Text
+      {show ? (
+        <>
+          <Card
             style={{
-              fontWeight: "200",
-              fontSize: 20,
-              borderBottomColor: "black",
-              borderBottomWidth: 1,
-            }}
-          >
-            Your Order Summary
-          </Text>
-          <FlatList
-            data={cartItems}
-            keyExtractor={(item) => item.productId}
-            renderItem={(itemData) => (
-              <CartItem
-                image={itemData.item.productImage}
-                quantity={itemData.item.quantity}
-                title={itemData.item.productTitle}
-                amount={itemData.item.sum}
-                deletable
-                onRemove={() => {
-                  dispatch(cartActions.removeFromCart(itemData.item.productId));
-                }}
-              />
-            )}
-          />
-        </LinearGradient>
-      </Card>
-      <Card
-        style={{
-          flex: 0.5,
-          marginHorizontal: 10,
-          borderRadius: 10,
-        }}
-      >
-        <LinearGradient
-          colors={["#c9d6ff", "#e2e2e2"]}
-          style={{
-            width: "100%",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.summaryText}>Delivery Address : </Text>
-          <TextInput
-            style={styles.address}
-            value={address}
-            onChangeText={(text) => setAddress(text)}
-            placeholder={"Write your Address here!"}
-            multiline
-            numberOfLines={3}
-            required
-            minLength={5}
-          />
-        </LinearGradient>
-      </Card>
-
-      <View style={styles.screen}>
-        <View style={styles.summary}>
-          <LinearGradient
-            colors={["#c9d6ff", "#e2e2e2"]}
-            style={{
-              width: "100%",
-              height: "100%",
+              flex: 0.45,
+              marginHorizontal: 10,
+              marginVertical: 20,
+              borderRadius: 10,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={styles.summaryText}>Have Promo-Code ? :</Text>
-            <TextInput
-              style={styles.input}
-              value={enteredValue}
-              onChangeText={promohandler}
-              placeholder={" TRY : FIRST50"}
+            <LinearGradient
+              colors={["#c9d6ff", "#e2e2e2"]}
+              style={{
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                // margin: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "200",
+                  fontSize: 20,
+                  borderBottomColor: "black",
+                  borderBottomWidth: 1,
+                }}
+              >
+                Your Order Summary
+              </Text>
+              <FlatList
+                data={cartItems}
+                keyExtractor={(item) => item.productId}
+                renderItem={(itemData) => (
+                  <CartItem
+                    image={itemData.item.productImage}
+                    quantity={itemData.item.quantity}
+                    title={itemData.item.productTitle}
+                    amount={itemData.item.sum}
+                    deletable
+                    onRemove={() => {
+                      dispatch(
+                        cartActions.removeFromCart(itemData.item.productId)
+                      );
+                    }}
+                  />
+                )}
+              />
+            </LinearGradient>
+          </Card>
+          <View
+            style={{
+              // backgroundColor: "black",
+              width: 300,
+              marginHorizontal: 30,
+              // alignItems: "center",
+              // alignContent: "center",
+              // justifyContent: "center",
+            }}
+          >
+            <Button
+              title='NEXT'
+              onPress={() => setShow((v) => !v)}
+              disabled={cartItems.length === 0}
             />
+          </View>
+        </>
+      ) : (
+        <>
+          <Card
+            style={{
+              flex: 0.3,
+              marginHorizontal: 30,
+              marginVertical: 0,
+              borderRadius: 10,
+            }}
+          >
+            <LinearGradient
+              colors={["#c9d6ff", "#e2e2e2"]}
+              style={{
+                width: "100%",
+                height: "100%",
+                // justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.summaryText}>Delivery Address : </Text>
+              <TextInput
+                style={styles.address}
+                value={address}
+                onChangeText={(text) => setAddress(text)}
+                placeholder={"Write your Address here!"}
+                multiline
+                numberOfLines={3}
+                required
+                minLength={5}
+              />
+            </LinearGradient>
+          </Card>
+          <View style={styles.screen}>
+            <View style={styles.summary}>
+              <LinearGradient
+                colors={["#c9d6ff", "#e2e2e2"]}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.summaryText}>Have Promo-Code ? :</Text>
+                <TextInput
+                  style={styles.input}
+                  value={enteredValue}
+                  onChangeText={promohandler}
+                  placeholder={" TRY : FIRST50"}
+                />
 
-            <Text style={styles.summaryText}>
-              Total: <Text style={styles.amount}>₹{sum}</Text>
-            </Text>
+                <Text style={styles.summaryText}>
+                  Total: <Text style={styles.amount}>₹{sum}</Text>
+                </Text>
+              </LinearGradient>
+            </View>
+          </View>
+          <View style={{ margin: 25 }}>
             <Button
               color={Colors.accent}
               title='Order Now'
@@ -160,9 +191,9 @@ const CartScreen = (props) => {
                 props.navigation.navigate("ThankYou");
               }}
             />
-          </LinearGradient>
-        </View>
-      </View>
+          </View>
+        </>
+      )}
     </>
   );
 };
@@ -170,9 +201,11 @@ const CartScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     // marginHorizontal: 1,
-    flex: 1,
-    height: "30%",
-    width: "100%",
+    flex: 0.3,
+    // height: "30%",
+    // width: "100%",
+    marginHorizontal: 30,
+    marginVertical: 20,
   },
   summary: {
     margin: 10,

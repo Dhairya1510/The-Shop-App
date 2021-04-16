@@ -24,6 +24,7 @@ const ProductDetailScreen = (props) => {
       <View style={styles.actions}>
         <Button
           color={Colors.primary}
+          disabled={selectedProduct.available != "yes"}
           title='Add To Cart'
           onPress={() => {
             dispatch(cartActions.addToCart(selectedProduct));

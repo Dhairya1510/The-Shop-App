@@ -99,22 +99,26 @@ const ProductsOverviewScreen = (props) => {
           }}
         >
           <Card style={{ width: 90, height: 25, margin: 5, padding: 5 }}>
-            <TouchableOpacity
-              onPress={() => {
-                dispatch(cartActions.addToCart(itemData.item));
-              }}
-            >
-              <View>
-                {/* <Button
+            {itemData.item.available == "yes" ? (
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(cartActions.addToCart(itemData.item));
+                }}
+              >
+                <View>
+                  {/* <Button
                 title='To Cart'
                 style={{ margin: 5 }}
                 onPress={() => {
                   dispatch(cartActions.addToCart(itemData.item));
                 }}
               /> */}
-                <Text>Add To Cart</Text>
-              </View>
-            </TouchableOpacity>
+                  <Text>Add To Cart</Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <Text style={{ color: "red" }}>Out of Stock</Text>
+            )}
           </Card>
         </ProductItem>
       )}

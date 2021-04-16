@@ -30,7 +30,8 @@ export const fetchProducts = () => {
             resData[key].description,
             resData[key].price,
             resData[key].spPrice,
-            resData[key].category
+            resData[key].category,
+            resData[key].available
           )
         );
       }
@@ -65,7 +66,8 @@ export const createProduct = (
   imageUrl,
   price,
   spPrice,
-  category
+  category,
+  available
 ) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
@@ -84,6 +86,7 @@ export const createProduct = (
           price,
           spPrice,
           category,
+          available,
           ownerId: userId,
         }),
       }
@@ -101,6 +104,7 @@ export const createProduct = (
         price,
         spPrice,
         category,
+        available,
         ownerId: userId,
       },
     });
@@ -113,7 +117,8 @@ export const updateProduct = (
   description,
   imageUrl,
   price,
-  spPrice
+  spPrice,
+  available
 ) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
@@ -130,6 +135,7 @@ export const updateProduct = (
           imageUrl,
           price,
           spPrice,
+          available,
         }),
       }
     );
@@ -143,6 +149,7 @@ export const updateProduct = (
         imageUrl,
         price,
         spPrice,
+        available,
       },
     });
   };
